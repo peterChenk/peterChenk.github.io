@@ -1,0 +1,1250 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon.ico?v=5.1.4">
+
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Element,">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="表单校验（多层嵌套）elementUI对表单的校验有自己的方法，要求传入model的必须为一个对象。但如果数据结构比较复杂，对象里面又嵌套对象，该如何校验？本文给出多层对象嵌套的方法。12345678910111213141516171819202122&amp;lt;template&amp;gt;  &amp;lt;el-form :model=&quot;formData&quot; :rules=&quot;formRule&quot; ref=&quot;fo">
+<meta name="keywords" content="Element">
+<meta property="og:type" content="article">
+<meta property="og:title" content="element-ui常见问题">
+<meta property="og:url" content="http://yoursite.com/post/98ebfde1.html">
+<meta property="og:site_name" content="Chen Kun">
+<meta property="og:description" content="表单校验（多层嵌套）elementUI对表单的校验有自己的方法，要求传入model的必须为一个对象。但如果数据结构比较复杂，对象里面又嵌套对象，该如何校验？本文给出多层对象嵌套的方法。12345678910111213141516171819202122&amp;lt;template&amp;gt;  &amp;lt;el-form :model=&quot;formData&quot; :rules=&quot;formRule&quot; ref=&quot;fo">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2019-11-10T10:03:38.840Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="element-ui常见问题">
+<meta name="twitter:description" content="表单校验（多层嵌套）elementUI对表单的校验有自己的方法，要求传入model的必须为一个对象。但如果数据结构比较复杂，对象里面又嵌套对象，该如何校验？本文给出多层对象嵌套的方法。12345678910111213141516171819202122&amp;lt;template&amp;gt;  &amp;lt;el-form :model=&quot;formData&quot; :rules=&quot;formRule&quot; ref=&quot;fo">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":true,"scrollpercent":true,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/post/98ebfde1.html">
+
+
+
+
+
+  <title>element-ui常见问题 | Chen Kun</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+	<a href="https://github.com/peterChenk"><img style="position: absolute; top: 0; left: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_left_darkblue_121621.png" alt="Fork me on GitHub"></a>
+
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Chen Kun</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off" placeholder="搜索..." spellcheck="false" type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/post/98ebfde1.html">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Chen Kun">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://gss0.baidu.com/-4o3dSag_xI4khGko9WTAnF6hhy/zhidao/pic/item/aa18972bd40735fada8fd8ef9d510fb30f24086c.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Chen Kun">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">element-ui常见问题</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-11-10T17:51:46+08:00">
+                2019-11-10
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/categories/Element/" itemprop="url" rel="index">
+                    <span itemprop="name">Element</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  1.8k
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  8
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h3 id="表单校验（多层嵌套）"><a href="#表单校验（多层嵌套）" class="headerlink" title="表单校验（多层嵌套）"></a>表单校验（多层嵌套）</h3><p>elementUI对表单的校验有自己的方法，要求传入model的必须为一个对象。但如果数据结构比较复杂，对象里面又嵌套对象，该如何校验？本文给出多层对象嵌套的方法。<br><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">template</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">el-form</span> <span class="attr">:model</span>=<span class="string">"formData"</span> <span class="attr">:rules</span>=<span class="string">"formRule"</span> <span class="attr">ref</span>=<span class="string">"formData"</span> <span class="attr">label-width</span>=<span class="string">"100px"</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">el-form-item</span> <span class="attr">prop</span>=<span class="string">"name"</span> <span class="attr">label</span>=<span class="string">"姓名"</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">el-input</span> <span class="attr">v-model</span>=<span class="string">"formData.name"</span> &gt;</span><span class="tag">&lt;/<span class="name">el-input</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">el-form-item</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">el-form-item</span> <span class="attr">prop</span>=<span class="string">"password"</span> <span class="attr">label</span>=<span class="string">"密码"</span>&gt;</span></span><br><span class="line">          <span class="tag">&lt;<span class="name">el-input</span> <span class="attr">v-model</span>=<span class="string">"formData.password"</span> &gt;</span><span class="tag">&lt;/<span class="name">el-input</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">el-form-item</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">el-form-item</span> <span class="attr">prop</span>=<span class="string">"user.tel"</span> <span class="attr">label</span>=<span class="string">"手机号"</span> &gt;</span></span><br><span class="line">          <span class="tag">&lt;<span class="name">el-input</span> <span class="attr">v-model</span>=<span class="string">"formData.user.tel"</span> &gt;</span><span class="tag">&lt;/<span class="name">el-input</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">el-form-item</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">el-form-item</span> <span class="attr">prop</span>=<span class="string">"phones[0].model"</span> <span class="attr">label</span>=<span class="string">"手机号"</span>&gt;</span></span><br><span class="line">          <span class="tag">&lt;<span class="name">el-input</span> <span class="attr">v-model</span>=<span class="string">"formData.phones[0].model"</span>&gt;</span><span class="tag">&lt;/<span class="name">el-input</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">el-form-item</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">el-form-item</span> <span class="attr">v-for</span>=<span class="string">"(phone, index) in formData.phones"</span> <span class="attr">:label</span>=<span class="string">"phone.brand"</span> <span class="attr">:key</span>=<span class="string">"phone.brand"</span> <span class="attr">:prop</span>=<span class="string">"'phones.' + index + '.model'"</span> <span class="attr">:rules</span>=<span class="string">"&#123;</span></span></span><br><span class="line"><span class="tag"><span class="string">      required: true, message: 'model不能为空', trigger: 'blur'</span></span></span><br><span class="line"><span class="tag"><span class="string">    &#125;"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">el-input</span> <span class="attr">v-model</span>=<span class="string">"phone.model"</span>&gt;</span><span class="tag">&lt;/<span class="name">el-input</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">el-form-item</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">el-form</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">el-button</span> @<span class="attr">click</span>=<span class="string">"handleSubmit"</span>&gt;</span>提交<span class="tag">&lt;/<span class="name">el-button</span>&gt;</span>    </span><br><span class="line"><span class="tag">&lt;/<span class="name">template</span>&gt;</span></span><br></pre></td></tr></table></figure></p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line">data () &#123;</span><br><span class="line">    <span class="keyword">return</span> &#123;</span><br><span class="line">      formData:&#123;</span><br><span class="line">          name: <span class="string">''</span>,</span><br><span class="line">          password: <span class="string">''</span>,</span><br><span class="line">          user: &#123;</span><br><span class="line">              tel: <span class="string">''</span></span><br><span class="line">          &#125;,</span><br><span class="line">           phones: [</span><br><span class="line">              &#123; <span class="attr">brand</span>: <span class="string">'华为'</span>, <span class="attr">model</span>: <span class="string">'P9'</span> &#125;,</span><br><span class="line">              &#123; <span class="attr">brand</span>: <span class="string">'小米'</span>, <span class="attr">model</span>: <span class="string">'MI8'</span> &#125;</span><br><span class="line">          ] </span><br><span class="line">      &#125;,</span><br><span class="line">      formRule:&#123;</span><br><span class="line">        name: [&#123;<span class="attr">required</span>: <span class="literal">true</span>, <span class="attr">message</span>: <span class="string">'不能为空'</span>, <span class="attr">trigger</span>: <span class="string">'blur'</span>&#125;,</span><br><span class="line">                &#123;<span class="attr">pattern</span>: <span class="regexp">/^[\u4E00-\u9FA5]+$/</span>, <span class="attr">message</span>: <span class="string">'用户名只能为中文'</span>, <span class="attr">trigger</span>: <span class="string">'blur'</span>&#125;],</span><br><span class="line">        password: [&#123;<span class="attr">required</span>: <span class="literal">true</span>, <span class="attr">message</span>: <span class="string">'不能为空'</span>, <span class="attr">trigger</span>: <span class="string">'blur'</span>&#125;,</span><br><span class="line">          &#123;<span class="attr">validator</span>: Verify.validatePassword, <span class="attr">trigger</span>: <span class="string">'blur'</span>&#125;,</span><br><span class="line">        ],</span><br><span class="line">        <span class="string">'user.tel'</span> : [&#123;<span class="attr">required</span>: <span class="literal">true</span>, <span class="attr">message</span>: <span class="string">'手机号码不能为空'</span>, <span class="attr">trigger</span>: <span class="string">'blur'</span>&#125;],</span><br><span class="line">        <span class="string">'phones[0].model'</span>: [&#123;<span class="attr">required</span>: <span class="literal">true</span>, <span class="attr">message</span>: <span class="string">'model不能为空'</span>, <span class="attr">trigger</span>: <span class="string">'blur'</span>&#125;],</span><br><span class="line">      &#125;,</span><br><span class="line">    &#125;</span><br><span class="line">&#125;,</span><br><span class="line"> </span><br><span class="line">methods: &#123;</span><br><span class="line">    handleSubmit()&#123;</span><br><span class="line">        <span class="keyword">const</span> t = <span class="keyword">this</span>;</span><br><span class="line">        t.$refs[<span class="string">'formData'</span>].validate(<span class="function">(<span class="params">valid</span>) =&gt;</span> &#123;</span><br><span class="line">            <span class="keyword">if</span>(valid)&#123;</span><br><span class="line">              <span class="built_in">console</span>.log(<span class="keyword">this</span>.formData);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><strong>校验方法</strong><br>model绑定的formData中内层user也是一个对象，现在想要对tel进行校验，在prop中传递user.tel，并且在rules中也要指定user.tel即可。</p>
+<p>对于验证规则，可以通过pattern或者validator来实现，pattern里面可以直接写正则表达式，不知道为啥文档中没有提到这点。之前的验证一般都是通过validator来实现的，验证方法单独写在一个文件中，这样可以做到整个项目公用，用到时只需通过import引一下即可。</p>
+<h3 id="table组件的单元格如何插入html内容-el-table-column同一行中读取多个数据"><a href="#table组件的单元格如何插入html内容-el-table-column同一行中读取多个数据" class="headerlink" title="table组件的单元格如何插入html内容(el-table-column同一行中读取多个数据)"></a>table组件的单元格如何插入html内容(el-table-column同一行中读取多个数据)</h3><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">el-table-column</span> <span class="attr">label</span>=<span class="string">"列标题"</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">template</span> <span class="attr">slot-scope</span>=<span class="string">"scope"</span>&gt;</span></span><br><span class="line">    &#123;&#123;scope.row&#125;&#125;</span><br><span class="line">  <span class="tag">&lt;/<span class="name">template</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">el-table-column</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<h3 id="父子表单-父组件点击提交按钮验证子组件表单必填项"><a href="#父子表单-父组件点击提交按钮验证子组件表单必填项" class="headerlink" title="父子表单 父组件点击提交按钮验证子组件表单必填项"></a>父子表单 父组件点击提交按钮验证子组件表单必填项</h3><p>解决方法：子组件先验证表单 传一个回调 父组件接受回调参数 提交成功</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">父组件： </span><br><span class="line">       <span class="comment">// 提交</span></span><br><span class="line">        singleSampleDispatch() &#123;</span><br><span class="line">            <span class="keyword">this</span>.$refs[<span class="string">'sampleMessage'</span>].validate(<span class="function">(<span class="params">valid</span>) =&gt;</span> &#123;</span><br><span class="line">                <span class="keyword">if</span> (valid) &#123;</span><br><span class="line">                       <span class="comment">//提交表单</span></span><br><span class="line"></span><br><span class="line">                    &#125;</span><br><span class="line">            &#125;);</span><br><span class="line">         &#125;</span><br><span class="line"></span><br><span class="line">子组件：</span><br><span class="line">     validate(callback) &#123;</span><br><span class="line">            <span class="keyword">this</span>.$refs[<span class="string">'sampleMessage'</span>].validate(<span class="function">(<span class="params">valid</span>) =&gt;</span> &#123;</span><br><span class="line">                callback(valid);</span><br><span class="line">            &#125;);</span><br><span class="line">      &#125;</span><br></pre></td></tr></table></figure>
+<h3 id="日期选择器时间选择范围限制"><a href="#日期选择器时间选择范围限制" class="headerlink" title="日期选择器时间选择范围限制"></a>日期选择器时间选择范围限制</h3><p>官方文档中使用picker-options属性来限制可选择的日期，这里举例子稍做补充。</p>
+<h4 id="单个输入框的"><a href="#单个输入框的" class="headerlink" title="单个输入框的"></a>单个输入框的</h4><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">el-date-picker</span></span></span><br><span class="line"><span class="tag">       <span class="attr">v-model</span>=<span class="string">"value1"</span></span></span><br><span class="line"><span class="tag">       <span class="attr">type</span>=<span class="string">"date"</span></span></span><br><span class="line"><span class="tag">       <span class="attr">placeholder</span>=<span class="string">"选择日期"</span></span></span><br><span class="line"><span class="tag">       <span class="attr">:picker-options</span>=<span class="string">"pickerOptions0"</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">el-date-picker</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p><strong>情景1: 设置选择今天以及今天之后的日期</strong><br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">data ()&#123;</span><br><span class="line">   <span class="keyword">return</span> &#123;</span><br><span class="line">       pickerOptions0: &#123;</span><br><span class="line">          disabledDate(time) &#123;</span><br><span class="line">            <span class="keyword">return</span> time.getTime() &lt; <span class="built_in">Date</span>.now() - <span class="number">8.64e7</span>;</span><br><span class="line">            <span class="comment">// return time.getTime() &lt; Date.now(); （不能选择当天时间）</span></span><br><span class="line">          &#125;</span><br><span class="line">        &#125;,  </span><br><span class="line">   &#125;     </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p><strong>情景2: 设置选择今天以及今天以前的日期</strong><br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">data ()&#123;</span><br><span class="line">   <span class="keyword">return</span> &#123;</span><br><span class="line">       pickerOptions0: &#123;</span><br><span class="line">          disabledDate(time) &#123;</span><br><span class="line">            <span class="keyword">return</span> time.getTime() &gt; <span class="built_in">Date</span>.now() - <span class="number">8.64e6</span></span><br><span class="line">            <span class="comment">// return time.getTime() &lt; Date.now(); （不能选择当天时间）</span></span><br><span class="line">          &#125;</span><br><span class="line">        &#125;,  </span><br><span class="line">   &#125;     </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p><strong>情景3: 设置选择三个月之前到今天的日期</strong><br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">data ()&#123;</span><br><span class="line">   <span class="keyword">return</span> &#123;</span><br><span class="line">       pickerOptions0: &#123;</span><br><span class="line">          disabledDate(time) &#123;</span><br><span class="line">            <span class="keyword">let</span> curDate = (<span class="keyword">new</span> <span class="built_in">Date</span>()).getTime();</span><br><span class="line">            <span class="keyword">let</span> three = <span class="number">90</span> * <span class="number">24</span> * <span class="number">3600</span> * <span class="number">1000</span>;</span><br><span class="line">            <span class="keyword">let</span> threeMonths = curDate - three;</span><br><span class="line">            <span class="keyword">return</span> time.getTime() &gt; <span class="built_in">Date</span>.now() || time.getTime() &lt; threeMonths;;</span><br><span class="line">          &#125;</span><br><span class="line">        &#125;,  </span><br><span class="line">   &#125;     </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h4 id="两个输入框"><a href="#两个输入框" class="headerlink" title="两个输入框"></a>两个输入框</h4><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">el-date-picker</span></span></span><br><span class="line"><span class="tag">       <span class="attr">v-model</span>=<span class="string">"value1"</span></span></span><br><span class="line"><span class="tag">       <span class="attr">type</span>=<span class="string">"date"</span></span></span><br><span class="line"><span class="tag">       <span class="attr">placeholder</span>=<span class="string">"开始日期"</span></span></span><br><span class="line"><span class="tag">       <span class="attr">:picker-options</span>=<span class="string">"pickerOptions0"</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">el-date-picker</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">el-date-picker</span></span></span><br><span class="line"><span class="tag">       <span class="attr">v-model</span>=<span class="string">"value2"</span></span></span><br><span class="line"><span class="tag">       <span class="attr">type</span>=<span class="string">"date"</span></span></span><br><span class="line"><span class="tag">       <span class="attr">placeholder</span>=<span class="string">"结束日期"</span></span></span><br><span class="line"><span class="tag">       <span class="attr">:picker-options</span>=<span class="string">"pickerOptions1"</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">el-date-picker</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">data()&#123;</span><br><span class="line">    <span class="keyword">return</span> &#123;</span><br><span class="line">         pickerOptions0: &#123;</span><br><span class="line">                disabledDate: <span class="function">(<span class="params">time</span>) =&gt;</span> &#123;</span><br><span class="line">                    <span class="keyword">if</span> (<span class="keyword">this</span>.value2 != <span class="string">""</span>) &#123;</span><br><span class="line">                        <span class="keyword">return</span> time.getTime() &gt; <span class="built_in">Date</span>.now() || time.getTime() &gt; <span class="keyword">this</span>.value2;</span><br><span class="line">                    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                        <span class="keyword">return</span> time.getTime() &gt; <span class="built_in">Date</span>.now();</span><br><span class="line">                    &#125;</span><br><span class="line"></span><br><span class="line">                &#125;</span><br><span class="line">            &#125;,</span><br><span class="line">            pickerOptions1: &#123;</span><br><span class="line">                disabledDate: <span class="function">(<span class="params">time</span>) =&gt;</span> &#123;</span><br><span class="line">                    <span class="keyword">return</span> time.getTime() &lt; <span class="keyword">this</span>.value1 || time.getTime() &gt; <span class="built_in">Date</span>.now();</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;,</span><br><span class="line">    &#125;      </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="关于上传图片的问题"><a href="#关于上传图片的问题" class="headerlink" title="关于上传图片的问题"></a>关于上传图片的问题</h3><p>如果一个页面有很多个上传，并且这个上传功能是根据数据动态渲染的，那么如果让上传跟字段绑定呢？<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&lt;el-upload</span><br><span class="line">         :ref=<span class="string">"item.fieldName"</span></span><br><span class="line">         :action=<span class="string">"importFileUrl"</span></span><br><span class="line">         :on-change=<span class="string">"(res,file)=&gt;&#123;return uploadFileImage(res,file, item.fieldName)&#125;"</span></span><br><span class="line">         :on-preview=<span class="string">"handlePreview"</span></span><br><span class="line">         :file-list=<span class="string">"form[item.fieldName]"</span>&gt;</span><br><span class="line"> &lt;<span class="regexp">/el-upload&gt;</span></span><br></pre></td></tr></table></figure></p>
+<p>这里我想表达的是on-change方法后边的函数，正常on-change方法会返给我们2个字段，一个res,file，但是我们这样写，就可以往下多传递个需要的字段。</p>
+<h3 id="el-checkbox-group动态绑定的问题，会出现点击一个结果全部选中的问题"><a href="#el-checkbox-group动态绑定的问题，会出现点击一个结果全部选中的问题" class="headerlink" title="el-checkbox-group动态绑定的问题，会出现点击一个结果全部选中的问题"></a>el-checkbox-group动态绑定的问题，会出现点击一个结果全部选中的问题</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&lt;el-form-item v-<span class="keyword">if</span>=<span class="string">"item.type==='checkbox'"</span> :label=<span class="string">"item.name"</span>&gt;</span><br><span class="line">    &lt;el-checkbox-group v-model=<span class="string">"form[item.fieldName]"</span>&gt;</span><br><span class="line">        &lt;el-checkbox v-<span class="keyword">for</span>=<span class="string">"(checkboxArr,radcheckbox) in item.options.options"</span>                 :label=<span class="string">"checkboxArr.name"</span> :value=<span class="string">"checkboxArr.fieldName"</span>&gt;<span class="xml"><span class="tag">&lt;/<span class="name">el-checkbox</span>&gt;</span></span></span><br><span class="line"><span class="xml">    <span class="tag">&lt;/<span class="name">el-checkbox-group</span>&gt;</span></span></span><br><span class="line"><span class="xml"><span class="tag">&lt;/<span class="name">el-form-item</span>&gt;</span></span></span><br></pre></td></tr></table></figure>
+<p>这个问题主要是 <el-checkbox-group v-model="form[item.fieldName]">这里v-model必须绑定的是个数组，切记。但是我们这样form[item.fieldName]，会默认绑定的是个字符串类型，我们可以在created里遍历数据<br>强制this.$set(this.form, val.fieldName, [])把数据类型转换成数组类型</el-checkbox-group></p>
+<h3 id="在表格中使用el-popover和el-input"><a href="#在表格中使用el-popover和el-input" class="headerlink" title="在表格中使用el-popover和el-input"></a>在表格中使用el-popover和el-input</h3><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">el-table-column</span> <span class="attr">prop</span>=<span class="string">"wares_id"</span> <span class="attr">label</span>=<span class="string">"商品ID"</span> <span class="attr">align</span>=<span class="string">"center"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">template</span> <span class="attr">scope</span>=<span class="string">"scope"</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">el-popover</span> <span class="attr">:ref</span>=<span class="string">"'popover_id_' + scope.row.id"</span> <span class="attr">trigger</span>=<span class="string">"click"</span> <span class="attr">placement</span>=<span class="string">"top"</span> <span class="attr">width</span>=<span class="string">"255"</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"editTitle"</span>&gt;</span>编辑商品ID<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">hr</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"editContent"</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">el-input</span> <span class="attr">v-model</span>=<span class="string">"scope.row.wares_id"</span> <span class="attr">class</span>=<span class="string">"edit"</span> <span class="attr">icon</span>=<span class="string">"circle-cross"</span></span></span><br><span class="line"><span class="tag">                            <span class="attr">:id</span>=<span class="string">"'wares_id_' + scope.row.id"</span> <span class="attr">:on-icon-click</span>=<span class="string">"clearInput"</span>&gt;</span><span class="tag">&lt;/<span class="name">el-input</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">img</span> <span class="attr">src</span>=<span class="string">"/src/assets/sure.png"</span> @<span class="attr">click</span>=<span class="string">"modifyWares('wares_id', scope.row.id)"</span></span></span><br><span class="line"><span class="tag">                        <span class="attr">align</span>=<span class="string">"center"</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">img</span> <span class="attr">src</span>=<span class="string">"/src/assets/cancel.png"</span> @<span class="attr">click</span>=<span class="string">"cancelModifyWares('id', scope.row.id)"</span></span></span><br><span class="line"><span class="tag">                        <span class="attr">align</span>=<span class="string">"center"</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">el-button</span> <span class="attr">slot</span>=<span class="string">"reference"</span> <span class="attr">class</span>=<span class="string">"tableData"</span> <span class="attr">type</span>=<span class="string">"text"</span></span></span><br><span class="line"><span class="tag">                        @<span class="attr">click</span>=<span class="string">"getInputValue('wares_id', scope.row.id, scope.row.wares_id)"</span>&gt;</span></span><br><span class="line">                &#123;&#123;scope.row.wares_id&#125;&#125;</span><br><span class="line">            <span class="tag">&lt;/<span class="name">el-button</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">el-popover</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">template</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">el-table-column</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>JS部分，用doClose()方法关闭el-popover</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">cancelModifyWares (str, id) &#123;</span><br><span class="line">    <span class="keyword">this</span>.$refs[<span class="string">'popover_'</span> + str + <span class="string">'_'</span> + id].doClose();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>为el-input控件赋值，el-input是对input控件的封装，打印出el-input可以看到它就是一个div，里面放了一个input，所以为里面的input赋值即为为el-input赋值<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">getInputValue (field, id, value) &#123;</span><br><span class="line">    <span class="built_in">document</span>.getElementById(field + <span class="string">'_'</span> + id).getElementsByTagName(<span class="string">"input"</span>)[<span class="number">0</span>].value = value;</span><br><span class="line">&#125;,</span><br></pre></td></tr></table></figure></p>
+<p>el-input控件里放一个清除icon，点击该icon，里面内容清空，可以将event打印出来，寻找其他方法</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">clearInput (event) &#123;</span><br><span class="line">    event.target.nextSibling.value = <span class="string">""</span>;</span><br><span class="line">&#125;,</span><br></pre></td></tr></table></figure>
+<h3 id="回车自动提交表单"><a href="#回车自动提交表单" class="headerlink" title="回车自动提交表单"></a>回车自动提交表单</h3><p>解决：（阻止表单提交）<br><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">el-form</span> <span class="attr">:inline</span>=<span class="string">"true"</span> <span class="attr">:model</span>=<span class="string">"params"</span> @<span class="attr">submit.native.prevent</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">el-form</span>&gt;</span></span><br></pre></td></tr></table></figure></p>
+<h3 id="监听input回车"><a href="#监听input回车" class="headerlink" title="监听input回车"></a>监听input回车</h3><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">el-input</span> <span class="attr">v-on:keyup.enter.native</span>=<span class="string">"login"</span>&gt;</span><span class="tag">&lt;/<span class="name">el-input</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<h3 id="tree组件增删改"><a href="#tree组件增删改" class="headerlink" title="tree组件增删改"></a>tree组件增删改</h3><p>参考 <a href="https://segmentfault.com/a/1190000011574698" target="_blank" rel="noopener">https://segmentfault.com/a/1190000011574698</a></p>
+<h3 id="table组件expand每次只展开一项"><a href="#table组件expand每次只展开一项" class="headerlink" title="table组件expand每次只展开一项"></a>table组件expand每次只展开一项</h3><p>文档没有具体属性，但是在issue找的方法都是结合row-key和expand-row-keys来实现这个功能<br>参考 <a href="https://github.com/ElemeFE/element/issues/3747" target="_blank" rel="noopener">https://github.com/ElemeFE/element/issues/3747</a></p>
+<p>解决:</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">el-table</span> @<span class="attr">expand</span>=<span class="string">"handleExpandRow"</span> <span class="attr">ref</span>=<span class="string">"row_table"</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">el-table</span>&gt;</span></span><br><span class="line">//method:</span><br><span class="line">handleExpandRow(row,expanded)&#123;</span><br><span class="line">    this.$refs.row_table.store.states.expandRows = expanded ? [row] : [];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+    <div>
+      
+        <div>
+    
+        <div style="text-align:center;color: #ccc;font-size:14px;">-------------本文结束<i class="fa fa-paw"></i>感谢您的阅读-------------</div>
+    
+</div>
+      
+    </div>
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Element/" rel="tag"># Element</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/post/e255a10a.html" rel="next" title="计算机网络">
+                <i class="fa fa-chevron-left"></i> 计算机网络
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/post/b883e279.html" rel="prev" title="从URL输入到页面展现到底发生什么?">
+                从URL输入到页面展现到底发生什么? <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        
+  <div class="bdsharebuttonbox">
+    <a href="#" class="bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a>
+    <a href="#" class="bds_douban" data-cmd="douban" title="分享到豆瓣网"></a>
+    <a href="#" class="bds_sqq" data-cmd="sqq" title="分享到QQ好友"></a>
+    <a href="#" class="bds_qzone" data-cmd="qzone" title="分享到QQ空间"></a>
+    <a href="#" class="bds_weixin" data-cmd="weixin" title="分享到微信"></a>
+    <a href="#" class="bds_tieba" data-cmd="tieba" title="分享到百度贴吧"></a>
+    <a href="#" class="bds_twi" data-cmd="twi" title="分享到Twitter"></a>
+    <a href="#" class="bds_fbook" data-cmd="fbook" title="分享到Facebook"></a>
+    <a href="#" class="bds_more" data-cmd="more"></a>
+    <a class="bds_count" data-cmd="count"></a>
+  </div>
+  <script>
+    window._bd_share_config = {
+      "common": {
+        "bdText": "",
+        "bdMini": "2",
+        "bdMiniList": false,
+        "bdPic": ""
+      },
+      "share": {
+        "bdSize": "16",
+        "bdStyle": "0"
+      },
+      "image": {
+        "viewList": ["tsina", "douban", "sqq", "qzone", "weixin", "twi", "fbook"],
+        "viewText": "分享到：",
+        "viewSize": "16"
+      }
+    }
+  </script>
+
+<script>
+  with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='//bdimg.share.baidu.com/static/api/js/share.js?cdnversion='+~(-new Date()/36e5)];
+</script>
+
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="https://gss0.baidu.com/-4o3dSag_xI4khGko9WTAnF6hhy/zhidao/pic/item/aa18972bd40735fada8fd8ef9d510fb30f24086c.jpg" alt="Chen Kun">
+            
+              <p class="site-author-name" itemprop="name">Chen Kun</p>
+              <p class="site-description motion-element" itemprop="description">blog</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">17</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">5</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">5</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+            <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+              <div class="links-of-blogroll-title">
+                <i class="fa  fa-fw fa-link"></i>
+                推荐阅读
+              </div>
+              <ul class="links-of-blogroll-list">
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://www.uisdc.com/" title="优设" target="_blank">优设</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://www.zhangxinxu.com/" title="张鑫旭" target="_blank">张鑫旭</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://www.alloyteam.com/nav/" title="Web前端导航" target="_blank">Web前端导航</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://www.36zhen.com/t?id=3448" title="前端书籍资料" target="_blank">前端书籍资料</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://ife.baidu.com/" title="百度前端技术学院" target="_blank">百度前端技术学院</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://wf.uisdc.com/cn/" title="google前端开发基础" target="_blank">google前端开发基础</a>
+                  </li>
+                
+              </ul>
+            </div>
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#表单校验（多层嵌套）"><span class="nav-number">1.</span> <span class="nav-text">表单校验（多层嵌套）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#table组件的单元格如何插入html内容-el-table-column同一行中读取多个数据"><span class="nav-number">2.</span> <span class="nav-text">table组件的单元格如何插入html内容(el-table-column同一行中读取多个数据)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#父子表单-父组件点击提交按钮验证子组件表单必填项"><span class="nav-number">3.</span> <span class="nav-text">父子表单 父组件点击提交按钮验证子组件表单必填项</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#日期选择器时间选择范围限制"><span class="nav-number">4.</span> <span class="nav-text">日期选择器时间选择范围限制</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#单个输入框的"><span class="nav-number">4.1.</span> <span class="nav-text">单个输入框的</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#两个输入框"><span class="nav-number">4.2.</span> <span class="nav-text">两个输入框</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#关于上传图片的问题"><span class="nav-number">5.</span> <span class="nav-text">关于上传图片的问题</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#el-checkbox-group动态绑定的问题，会出现点击一个结果全部选中的问题"><span class="nav-number">6.</span> <span class="nav-text">el-checkbox-group动态绑定的问题，会出现点击一个结果全部选中的问题</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#在表格中使用el-popover和el-input"><span class="nav-number">7.</span> <span class="nav-text">在表格中使用el-popover和el-input</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#回车自动提交表单"><span class="nav-number">8.</span> <span class="nav-text">回车自动提交表单</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#监听input回车"><span class="nav-number">9.</span> <span class="nav-text">监听input回车</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#tree组件增删改"><span class="nav-number">10.</span> <span class="nav-text">tree组件增删改</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#table组件expand每次只展开一项"><span class="nav-number">11.</span> <span class="nav-text">table组件expand每次只展开一项</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+        <div class="back-to-top">
+          <i class="fa fa-arrow-up"></i>
+          
+            <span id="scrollpercent"><span>0</span>%</span>
+          
+        </div>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">chenkun</span>
+
+  
+</div>
+<div class="powered-by">
+  <i class="fa fa-user-md"></i><span id="busuanzi_container_site_uv">
+    <span id="busuanzi_value_site_uv"></span>
+  </span>
+</div>
+
+
+  
+
+
+
+  <span class="post-meta-divider"></span>
+
+
+
+  
+
+
+
+<div class="theme-info">
+  <div class="powered-by"></div>
+  <span class="post-count">博客全站共57.8k字</span>
+</div>
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
