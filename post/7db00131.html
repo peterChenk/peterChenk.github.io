@@ -1,0 +1,1450 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon.ico?v=5.1.4">
+
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="前端工程化,">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="人们常说的前端工程化到底是什么 Webpack与Grunt，Gulp 的区别Grunt 是开创者 Grunt 的出现是前端构建工具从0到1的变革，是具有开创意义的。在它之前我们经常都是通过 bash 或者 make 调用 closure-compiler 之类的工具。前端并不存在一个统一的构建工具和标准。Grunt的出现终结了这种混乱的局面，前端领域有了自己的构建工具，和大部分人都差不多采用的构建">
+<meta name="keywords" content="前端工程化">
+<meta property="og:type" content="article">
+<meta property="og:title" content="前端工程化">
+<meta property="og:url" content="http://yoursite.com/post/7db00131.html">
+<meta property="og:site_name" content="Chen Kun">
+<meta property="og:description" content="人们常说的前端工程化到底是什么 Webpack与Grunt，Gulp 的区别Grunt 是开创者 Grunt 的出现是前端构建工具从0到1的变革，是具有开创意义的。在它之前我们经常都是通过 bash 或者 make 调用 closure-compiler 之类的工具。前端并不存在一个统一的构建工具和标准。Grunt的出现终结了这种混乱的局面，前端领域有了自己的构建工具，和大部分人都差不多采用的构建">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://yoursite.com/post/img/1567076014(1">
+<meta property="og:image" content="http://yoursite.com/post/img/1567076096(1">
+<meta property="og:image" content="https://img.alicdn.com/tps/TB1GVGFNXXXXXaTapXXXXXXXXXX-4436-4244.jpg">
+<meta property="og:updated_time" content="2019-12-01T13:56:18.333Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="前端工程化">
+<meta name="twitter:description" content="人们常说的前端工程化到底是什么 Webpack与Grunt，Gulp 的区别Grunt 是开创者 Grunt 的出现是前端构建工具从0到1的变革，是具有开创意义的。在它之前我们经常都是通过 bash 或者 make 调用 closure-compiler 之类的工具。前端并不存在一个统一的构建工具和标准。Grunt的出现终结了这种混乱的局面，前端领域有了自己的构建工具，和大部分人都差不多采用的构建">
+<meta name="twitter:image" content="http://yoursite.com/post/img/1567076014(1">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":true,"scrollpercent":true,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/post/7db00131.html">
+
+
+
+
+
+  <title>前端工程化 | Chen Kun</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+	<a href="https://github.com/peterChenk"><img style="position: absolute; top: 0; left: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_left_darkblue_121621.png" alt="Fork me on GitHub"></a>
+
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Chen Kun</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off" placeholder="搜索..." spellcheck="false" type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/post/7db00131.html">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Chen Kun">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://gss0.baidu.com/-4o3dSag_xI4khGko9WTAnF6hhy/zhidao/pic/item/aa18972bd40735fada8fd8ef9d510fb30f24086c.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Chen Kun">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">前端工程化</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-11-24T22:17:42+08:00">
+                2019-11-24
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/categories/前端工程化/" itemprop="url" rel="index">
+                    <span itemprop="name">前端工程化</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  4.4k
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  16
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p><a href="https://www.jianshu.com/p/0d0f268ec73d" target="_blank" rel="noopener">人们常说的前端工程化到底是什么</a></p>
+<h3 id="Webpack与Grunt，Gulp-的区别"><a href="#Webpack与Grunt，Gulp-的区别" class="headerlink" title="Webpack与Grunt，Gulp 的区别"></a>Webpack与Grunt，Gulp 的区别</h3><p>Grunt 是开创者 Grunt 的出现是前端构建工具从0到1的变革，是具有开创意义的。在它之前我们经常都是通过 bash 或者 make 调用 closure-compiler 之类的工具。前端并不存在一个统一的构建工具和标准。<br>Grunt的出现终结了这种混乱的局面，前端领域有了自己的构建工具，和大部分人都差不多采用的构建流程。</p>
+<p>Grunt 虽然是开创者的地位，但是，他仅仅是把混乱的构建过程统一化了，用起来方便了，其实本质上没有变。本质上我们依然是把 CSS, JS, HTML，图片等 各自打包，<br>一个JS模块依赖的 CSS 等外部资源依然没有任何语法上的声明，我们甚至需要在组件说明中强调这个组件依赖哪个CSS，依赖那几张图片。也就是说，<strong>模块依赖的问题依然没有解决。</strong></p>
+<p>另外 Grunt 是直接面向文件操作的，每一个任务都是输入一个文件，然后输出一个文件。这样导致如果一个文件需要经过多次处理，在中间每一步都会写文件，这些文件其实并没有必要写。这样就导致Grunt的效率比较低。 比如我编译JS的时候，可能需要先 CoffeeScript 编译一下，然后 Uglify 一下，那么很多时候 Coffee 编译的文件我并不需要，我只要 Uglify 之后的文件，而写文件是很耗时的。</p>
+<p>Gulp 只是做了改良 Gulp 基于Stream 就明显比 Grunt要更高效，且更任务组合灵活。我可以读入一个文件，然后进行多个操作，最终直接输出我要的结果，不存在中间的临时文件。 然而 Gulp 只是一个量变，它依然没能解决模块依赖的问题。</p>
+<p>Webpack 划时代的解决了模块依赖的问题 Webpack 的出现比较完美解决了前端模块依赖的问题，任何资源都是JS，任何资源都可以在JS中声明依赖。这是具有划时代意义的。甚至我是这样认为的，在webpack之前前端是没有真正的通用的模块化开发的（特定框架的不算）。</p>
+<h3 id="Webpack原理简述以及plugins和loaders的实现原理"><a href="#Webpack原理简述以及plugins和loaders的实现原理" class="headerlink" title="Webpack原理简述以及plugins和loaders的实现原理"></a>Webpack原理简述以及plugins和loaders的实现原理</h3><ul>
+<li>核心概念<br>JavaScript 的 模块打包工具 (module bundler)。通过分析模块之间的依赖，最终将所有模块打包成一份或者多份代码包 (bundler)，供 HTML 直接引用。实质上，Webpack 仅仅提供了 打包功能 和一套 文件处理机制，然后通过生态中的各种 Loader 和 Plugin 对代码进行预编译和打包。因此 Webpack 具有高度的可拓展性，能更好的发挥社区生态的力量。<ul>
+<li>Entry: 入口文件，Webpack 会从该文件开始进行分析与编译；</li>
+<li>Output: 出口路径，打包后创建 bundler 的文件路径以及文件名；</li>
+<li>Module: 模块，在 Webpack 中任何文件都可以作为一个模块，会根据配置的不同的 Loader 进行加载和打包；</li>
+<li>Chunk: 代码块，可以根据配置，将所有模块代码合并成一个或多个代码块，以便按需加载，提高性能；</li>
+<li>Loader: 模块加载器，进行各种文件类型的加载与转换；<ul>
+<li>Plugin: 拓展插件，可以通过 Webpack 相应的事件钩子，介入到打包过程中的任意环节，从而对代码按需修改；</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>工作流程 (加载 - 编译 - 输出)<ol>
+<li>读取配置文件，按命令 初始化 配置参数，创建 Compiler 对象；</li>
+<li>调用插件的 apply 方法 挂载插件 监听，然后从入口文件开始执行编译；</li>
+<li>按文件类型，调用相应的 Loader 对模块进行 编译，并在合适的时机点触发对应的事件，调用 Plugin 执行，最后再根据模块 依赖查找 到所依赖的模块，递归执行第三步；</li>
+<li>将编译后的所有代码包装成一个个代码块 (Chuck)， 并按依赖和配置确定 输出内容。这个步骤，仍然可以通过 Plugin 进行文件的修改;</li>
+<li>最后，根据 Output 把文件内容一一写入到指定的文件夹中，完成整个过程；</li>
+</ol>
+</li>
+<li>模块包装:<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line">(<span class="function"><span class="keyword">function</span>(<span class="params">modules</span>) </span>&#123;</span><br><span class="line">	<span class="comment">// 模拟 require 函数，从内存中加载模块；</span></span><br><span class="line">	<span class="function"><span class="keyword">function</span> <span class="title">__webpack_require__</span>(<span class="params">moduleId</span>) </span>&#123;</span><br><span class="line">		<span class="comment">// 缓存模块</span></span><br><span class="line">		<span class="keyword">if</span> (installedModules[moduleId]) &#123;</span><br><span class="line">			<span class="keyword">return</span> installedModules[moduleId].exports;</span><br><span class="line">		&#125;</span><br><span class="line">		</span><br><span class="line">		<span class="keyword">var</span> <span class="built_in">module</span> = installedModules[moduleId] = &#123;</span><br><span class="line">			i: moduleId,</span><br><span class="line">			l: <span class="literal">false</span>,</span><br><span class="line">			exports: &#123;&#125;</span><br><span class="line">		&#125;;</span><br><span class="line">		</span><br><span class="line">		<span class="comment">// 执行代码；</span></span><br><span class="line">		modules[moduleId].call(<span class="built_in">module</span>.exports, <span class="built_in">module</span>, <span class="built_in">module</span>.exports, __webpack_require__);</span><br><span class="line">		</span><br><span class="line">		<span class="comment">// Flag: 标记是否加载完成；</span></span><br><span class="line">		<span class="built_in">module</span>.l = <span class="literal">true</span>;</span><br><span class="line">		</span><br><span class="line">		<span class="keyword">return</span> <span class="built_in">module</span>.exports;</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	<span class="comment">// ...</span></span><br><span class="line">	</span><br><span class="line">	<span class="comment">// 开始执行加载入口文件；</span></span><br><span class="line">	<span class="keyword">return</span> __webpack_require__(__webpack_require__.s = <span class="string">"./src/index.js"</span>);</span><br><span class="line"> &#125;)(&#123;</span><br><span class="line"> 	<span class="string">"./src/index.js"</span>: <span class="function"><span class="keyword">function</span> (<span class="params">module, __webpack_exports__, __webpack_require__</span>) </span>&#123;</span><br><span class="line">		<span class="comment">// 使用 eval 执行编译后的代码；</span></span><br><span class="line">		<span class="comment">// 继续递归引用模块内部依赖；</span></span><br><span class="line">		<span class="comment">// 实际情况并不是使用模板字符串，这里是为了代码的可读性；</span></span><br><span class="line">		<span class="built_in">eval</span>(<span class="string">`</span></span><br><span class="line"><span class="string">			__webpack_require__.r(__webpack_exports__);</span></span><br><span class="line"><span class="string">			//</span></span><br><span class="line"><span class="string">			var _test__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__("test", ./src/test.js");</span></span><br><span class="line"><span class="string">		`</span>);</span><br><span class="line">	&#125;,</span><br><span class="line">	<span class="string">"./src/test.js"</span>: <span class="function"><span class="keyword">function</span> (<span class="params">module, __webpack_exports__, __webpack_require__</span>) </span>&#123;</span><br><span class="line">		<span class="comment">// ...</span></span><br><span class="line">	&#125;,</span><br><span class="line"> &#125;)</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p><strong>总结:</strong></p>
+<ul>
+<li>模块机制: webpack 自己实现了一套模拟模块的机制，将其包裹于业务代码的外部，从而提供了一套模块机制；</li>
+<li>文件编译: webpack 规定了一套编译规则，通过 Loader 和 Plugin，以管道的形式对文件字符串进行处理；</li>
+</ul>
+<h4 id="2-Loader"><a href="#2-Loader" class="headerlink" title="2. Loader"></a>2. Loader</h4><p>由于 Webpack 是基于 Node，因此 Webpack 其实是只能识别 js 模块，比如 css / html / 图片等类型的文件并无法加载，因此就需要一个对<strong>不同格式文件转换器</strong>。其实 Loader 做的事，也并不难理解: <strong>对 Webpack 传入的字符串进行按需修改</strong>。例如一个最简单的 Loader:<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// html-loader/index.js</span></span><br><span class="line"><span class="built_in">module</span>.exports = <span class="function"><span class="keyword">function</span>(<span class="params">htmlSource</span>) </span>&#123;</span><br><span class="line">	<span class="comment">// 返回处理后的代码字符串</span></span><br><span class="line">	<span class="comment">// 删除 html 文件中的所有注释</span></span><br><span class="line">	<span class="keyword">return</span> htmlSource.replace(<span class="regexp">/&lt;!--[\w\W]*?--&gt;/g</span>, <span class="string">''</span>)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>当然，实际的 Loader 不会这么简单，通常是需要将代码进行分析，构建 AST (抽象语法树)， 遍历进行定向的修改后，再重新生成新的代码字符串。如我们常用的 Babel-loader 会执行以下步骤:</p>
+<ul>
+<li>babylon 将 ES6/ES7 代码解析成 AST</li>
+<li>babel-traverse 对 AST 进行遍历转译，得到新的 AST</li>
+<li>新 AST 通过 babel-generator 转换成 ES5</li>
+</ul>
+<p><strong>Loader 特性:</strong></p>
+<ul>
+<li>链式传递，按照配置时相反的顺序链式执行；</li>
+<li>基于 Node 环境，拥有 较高权限，比如文件的增删查改；</li>
+<li>可同步也可异步；</li>
+</ul>
+<p><strong>常用 Loader:</strong></p>
+<ul>
+<li>file-loader: 加载文件资源，如 字体 / 图片 等，具有移动/复制/命名等功能；</li>
+<li>url-loader: 通常用于加载图片，可以将小图片直接转换为 Date Url，减少请求；</li>
+<li>babel-loader: 加载 js / jsx 文件， 将 ES6 / ES7 代码转换成 ES5，抹平兼容性问题；</li>
+<li>ts-loader: 加载 ts / tsx 文件，编译 TypeScript；</li>
+<li>style-loader: 将 css 代码以<code>&lt;style&gt;</code>标签的形式插入到 html 中；</li>
+<li>css-loader: 分析@import和url()，引用 css 文件与对应的资源；</li>
+<li>postcss-loader: 用于 css 的兼容性处理，具有众多功能，例如 添加前缀，单位转换 等；</li>
+<li>less-loader / sass-loader: css预处理器，在 css 中新增了许多语法，提高了开发效率；</li>
+</ul>
+<p><strong>编写原则:</strong></p>
+<ul>
+<li>单一原则: 每个 Loader 只做一件事；</li>
+<li>链式调用: Webpack 会按顺序链式调用每个 Loader；</li>
+<li>统一原则: 遵循 Webpack 制定的设计规则和结构，输入与输出均为字符串，各个 Loader 完全独立，即插即用；</li>
+</ul>
+<h4 id="Plugin"><a href="#Plugin" class="headerlink" title="Plugin"></a>Plugin</h4><p>插件系统是 Webpack 成功的一个关键性因素。在编译的整个生命周期中，Webpack 会触发许多事件钩子，Plugin 可以监听这些事件，根据需求在相应的时间点对打包内容进行定向的修改。</p>
+<ul>
+<li><p>一个最简单的 plugin 是这样的:</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Plugin</span></span>&#123;</span><br><span class="line">  	<span class="comment">// 注册插件时，会调用 apply 方法</span></span><br><span class="line">  	<span class="comment">// apply 方法接收 compiler 对象</span></span><br><span class="line">  	<span class="comment">// 通过 compiler 上提供的 Api，可以对事件进行监听，执行相应的操作</span></span><br><span class="line">  	apply(compiler)&#123;</span><br><span class="line">  		<span class="comment">// compilation 是监听每次编译循环</span></span><br><span class="line">  		<span class="comment">// 每次文件变化，都会生成新的 compilation 对象并触发该事件</span></span><br><span class="line">    	compiler.plugin(<span class="string">'compilation'</span>,<span class="function"><span class="keyword">function</span>(<span class="params">compilation</span>) </span>&#123;&#125;)</span><br><span class="line">  	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>注册插件:</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// webpack.config.js</span></span><br><span class="line"><span class="built_in">module</span>.export = &#123;</span><br><span class="line">	plugins:[</span><br><span class="line">		<span class="keyword">new</span> Plugin(options),</span><br><span class="line">	]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>事件流机制:</p>
+</li>
+</ul>
+<p>Webpack 就像工厂中的一条产品流水线。原材料经过 Loader 与 Plugin 的一道道处理，最后输出结果。</p>
+<ul>
+<li>通过链式调用，按顺序串起一个个 Loader；</li>
+<li>通过事件流机制，让 Plugin 可以插入到整个生产过程中的每个步骤中；</li>
+</ul>
+<p>Webpack 事件流编程范式的核心是基础类 <strong>Tapable</strong>，是一种 观察者模式 的实现事件的订阅与广播：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> &#123; SyncHook &#125; = <span class="built_in">require</span>(<span class="string">"tapable"</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> hook = <span class="keyword">new</span> SyncHook([<span class="string">'arg'</span>])</span><br><span class="line"></span><br><span class="line"><span class="comment">// 订阅</span></span><br><span class="line">hook.tap(<span class="string">'event'</span>, (arg) =&gt; &#123;</span><br><span class="line">	<span class="comment">// 'event-hook'</span></span><br><span class="line">	<span class="built_in">console</span>.log(arg)</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line"><span class="comment">// 广播</span></span><br><span class="line">hook.call(<span class="string">'event-hook'</span>)</span><br></pre></td></tr></table></figure>
+<p>Webpack 中两个最重要的类 Compiler 与 Compilation 便是继承于 Tapable，也拥有这样的事件流机制。</p>
+<ul>
+<li><strong>Compiler</strong>: 可以简单的理解为 Webpack 实例，它包含了当前 Webpack 中的所有配置信息，如 options， loaders, plugins 等信息，全局唯一，只在启动时完成初始化创建，随着生命周期逐一传递；</li>
+<li><p><strong>Compilation</strong>: 可以称为 编译实例。当监听到文件发生改变时，Webpack 会创建一个新的 Compilation 对象，开始一次新的编译。它包含了当前的输入资源，输出资源，变化的文件等，同时通过它提供的 api，可以监听每次编译过程中触发的事件钩子；</p>
+</li>
+<li><p><strong>区别</strong>:</p>
+<ul>
+<li>Compiler 全局唯一，且从启动生存到结束；</li>
+<li>Compilation 对应每次编译，每轮编译循环均会重新创建；</li>
+</ul>
+</li>
+<li><p><strong>常用 Plugin</strong>:</p>
+</li>
+<li><p>UglifyJsPlugin: 压缩、混淆代码;</p>
+</li>
+<li>CommonsChunkPlugin: 代码分割；</li>
+<li>ProvidePlugin: 自动加载模块；</li>
+<li>html-webpack-plugin: 加载 html 文件，并引入 css / js 文件；</li>
+<li>extract-text-webpack-plugin / mini-css-extract-plugin: 抽离样式，生成 css 文件；</li>
+<li>DefinePlugin: 定义全局变量；</li>
+<li>optimize-css-assets-webpack-plugin: CSS 代码去重；</li>
+<li>webpack-bundle-analyzer: 代码分析；</li>
+<li>compression-webpack-plugin: 使用 gzip 压缩 js 和 css；</li>
+<li>happypack: 使用多进程，加速代码构建；</li>
+<li>EnvironmentPlugin: 定义环境变量；</li>
+</ul>
+<h4 id="4-编译优化"><a href="#4-编译优化" class="headerlink" title="4. 编译优化"></a>4. 编译优化</h4><ul>
+<li><p>代码优化:</p>
+<ul>
+<li><p><strong>无用代码消除</strong>, 是许多编程语言都具有的优化手段，这个过程称为 DCE (dead code elimination)，即 删除不可能执行的代码；</p>
+<pre><code>* 例如我们的 UglifyJs，它就会帮我们在生产环境中删除不可能被执行的代码，例如:
+</code></pre><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> fn = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">	<span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">	<span class="comment">// 下面代码便属于 不可能执行的代码；</span></span><br><span class="line">	<span class="comment">// 通过 UglifyJs (Webpack4+ 已内置) 便会进行 DCE；</span></span><br><span class="line">	<span class="keyword">var</span> a = <span class="number">1</span>;</span><br><span class="line">	<span class="keyword">return</span> a;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><strong>摇树优化</strong> (Tree-shaking)，这是一种形象比喻。我们把打包后的代码比喻成一棵树，这里其实表示的就是，通过工具 “摇” 我们打包后的 js 代码，将没有使用到的无用代码 “摇” 下来 (删除)。即 消除那些被 <strong>引用了但未被使用</strong> 的模块代码。</p>
+<ul>
+<li><strong>原理</strong>: 由于是在编译时优化，因此最基本的前提就是语法的静态分析，<strong>ES6的模块机制</strong> 提供了这种可能性。不需要运行时，便可进行代码字面上的静态分析，确定相应的依赖关系。</li>
+<li><strong>问题</strong>: 具有 副作用 的函数无法被 tree-shaking。<ul>
+<li>在引用一些第三方库，需要去观察其引入的代码量是不是符合预期；</li>
+<li>尽量写纯函数，减少函数的副作用；</li>
+<li>可使用 webpack-deep-scope-plugin，可以进行作用域分析，减少此类情况的发生，但仍需要注意；</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><strong>code-spliting</strong>:  代码分割 技术，将代码分割成多份进行 懒加载 或 异步加载，避免打包成一份后导致体积过大，影响页面的首屏加载；<ul>
+<li>Webpack 中使用 SplitChunksPlugin 进行拆分</li>
+<li>按 页面 拆分: 不同页面打包成不同的文件；</li>
+<li>按 功能 拆分: <ul>
+<li>将类似于播放器，计算库等大模块进行拆分后再懒加载引入；</li>
+<li>提取复用的业务代码，减少冗余代码；</li>
+</ul>
+</li>
+<li>按 <strong>文件修改频率</strong> 拆分: 将第三方库等不常修改的代码单独打包，而且不改变其文件 hash 值，能最大化运用浏览器的缓存；</li>
+</ul>
+</li>
+<li><strong>scope hoisting: 作用域提升</strong>，将分散的模块划分到同一个作用域中，避免了代码的重复引入，有效减少打包后的代码体积和运行时的内存损耗；</li>
+</ul>
+</li>
+<li><p><strong>编译性能优化</strong>:</p>
+</li>
+<li>升级至 最新 版本的 webpack，能有效提升编译性能；<ul>
+<li>使用 dev-server / 模块热替换 (HMR) 提升开发体验；<ul>
+<li>监听文件变动 忽略 node_modules 目录能有效提高监听时的编译效率；</li>
+</ul>
+</li>
+<li><strong>缩小编译范围:</strong> <ul>
+<li>modules: 指定模块路径，减少递归搜索；</li>
+<li>mainFields: 指定入口文件描述字段，减少搜索；</li>
+<li>noParse: 避免对非模块化文件的加载；</li>
+<li>includes/exclude: 指定搜索范围/排除不必要的搜索范围；</li>
+<li>alias: 缓存目录，避免重复寻址；</li>
+</ul>
+</li>
+<li>babel-loader:<ul>
+<li>忽略node_moudles，避免编译第三方库中已经被编译过的代码；</li>
+<li>使用cacheDirectory，可以缓存编译结果，避免多次重复编译；</li>
+</ul>
+</li>
+<li>多进程并发:<ul>
+<li>webpack-parallel-uglify-plugin: 可多进程并发压缩 js 文件，提高压缩速度；</li>
+<li>HappyPack: 多进程并发文件的 Loader 解析；</li>
+</ul>
+</li>
+<li>第三方库模块缓存:<ul>
+<li>DLLPlugin 和 DLLReferencePlugin 可以提前进行打包并缓存，避免每次都重新编译；</li>
+</ul>
+</li>
+<li>使用分析:<ul>
+<li>Webpack Analyse / webpack-bundle-analyzer 对打包后的文件进行分析，寻找可优化的地方；</li>
+<li>配置profile：true，对各个编译阶段耗时进行监控，寻找耗时最多的地方；</li>
+</ul>
+</li>
+<li>source-map:<ul>
+<li>开发: cheap-module-eval-source-map；</li>
+<li>生产: hidden-source-map；</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="webpack-热更新原理"><a href="#webpack-热更新原理" class="headerlink" title="webpack 热更新原理"></a>webpack 热更新原理</h3><p><a href="https://juejin.im/post/5c3ca02ce51d45451850250a" target="_blank" rel="noopener">参考</a></p>
+<p><img src="/post/./img/1567076014(1" alt="img">.jpg)<br><img src="/post/./img/1567076096(1" alt="img">.jpg)</p>
+<ol>
+<li>初始化的时候，client.js 会启动一个 socket 和 webpack-dev-server 建立连接，然后等待 hash 和 ok 消息。</li>
+<li>当有文件内容改动的时候，首先会收到 webpack-dev-server 发来的 hash 消息，得到新的 哈希值并保存起来。</li>
+<li>然后会立刻接收到 ok 消息，表示现在可以加载最新的代码了，于是进入 reloadApp 方法。</li>
+<li>reloadApp -&gt; check()</li>
+<li>check =&gt; hotDownloadManifest, 这里会下载一个本次热更新的manifest文件，url就是用上面存的 hash 拼接出来的，大概这样：8b52a72952cca784407e.hot-update.json，结果大概长这样：{“h”:”8b52a72952cca784407e”,”c”:{“0”:true}}。这里仔细观察会发现，每一次取到的manifest中的hash 都是上一次 hash 消息的值，这样应该是为了保证顺序。</li>
+<li>hotDownloadManifest 下载完配置文件后，可以看到其中有一个 h ，这个hash就是我们等会要取编译后的新代码的地址，在 hotEnsureUpdateChunk 方法中最终会通过 jsonp的方式把新的代码加载进来。</li>
+<li>加载到新的模块代码后，会有一系列的对 依赖树 比如 installedModules 的更新操作。</li>
+<li><p>最终，在 hotApply 中会执行我们的 module.hot.accept 注册的回调函数</p>
+</li>
+<li><p>Webpack编译期，为需要热更新的 entry 注入热更新代码(EventSource通信)</p>
+</li>
+<li>页面首次打开后，服务端与客户端通过 EventSource 建立通信渠道，把下一次的 hash 返回前端</li>
+<li>客户端获取到hash，这个hash将作为下一次请求服务端 hot-update.js 和 hot-update.json的hash</li>
+<li>修改页面代码后，Webpack 监听到文件修改后，开始编译，编译完成后，发送 build 消息给客户端</li>
+<li>HotModuleReplacement.runtime 是客户端 HMR 的中枢，它接收到上一步传递给他的新模块的 hash 值，它通过 JsonpMainTemplate.runtime 向 server 端发送 Ajax 请求，服务端返回一个 json，该 json 包含了所有要更新的模块的 hash 值，获取到更新列表后，该模块再次通过 jsonp 请求，获取到最新的模块代码</li>
+<li>客户端获取到hash，成功后客户端构造hot-update.js script链接，然后插入主文档</li>
+<li>hot-update.js 插入成功后，执行hotAPI 的 createRecord 和 reload方法，获取到 Vue 组件的 render方法，重新 render 组件， 继而实现 UI 无刷新更新。</li>
+</ol>
+<h4 id="webpack-生命周期"><a href="#webpack-生命周期" class="headerlink" title="webpack 生命周期"></a>webpack 生命周期</h4><p><a href="https://fed.taobao.org/blog/2016/09/10/webpack-flow/" target="_blank" rel="noopener">参考</a></p>
+<p><img src="https://img.alicdn.com/tps/TB1GVGFNXXXXXaTapXXXXXXXXXX-4436-4244.jpg" alt="img"></p>
+<h4 id="如何编写loaders和plugins"><a href="#如何编写loaders和plugins" class="headerlink" title="如何编写loaders和plugins"></a>如何编写loaders和plugins</h4><p><a href="https://www.jianshu.com/p/c021b78c9ef2" target="_blank" rel="noopener">参考</a></p>
+<h4 id="介绍下-npm-模块安装机制，为什么输入-npm-install-就可以自动安装对应的模块？"><a href="#介绍下-npm-模块安装机制，为什么输入-npm-install-就可以自动安装对应的模块？" class="headerlink" title="介绍下 npm 模块安装机制，为什么输入 npm install 就可以自动安装对应的模块？"></a>介绍下 npm 模块安装机制，为什么输入 npm install 就可以自动安装对应的模块？</h4><ol>
+<li>npm 模块安装机制：</li>
+</ol>
+<ul>
+<li>发出npm install命令</li>
+<li>查询node_modules目录之中是否已经存在指定模块<ul>
+<li>若存在，不再重新安装</li>
+<li>若不存在<ul>
+<li>npm 向 registry 查询模块压缩包的网址</li>
+<li>下载压缩包，存放在根目录下的.npm目录里</li>
+<li>解压压缩包到当前项目的node_modules目录</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h4 id="webpack-打包-vue-速度太慢怎么办？"><a href="#webpack-打包-vue-速度太慢怎么办？" class="headerlink" title="webpack 打包 vue 速度太慢怎么办？"></a>webpack 打包 vue 速度太慢怎么办？</h4><ol>
+<li>eslint代码校验其实是一个很费时间的一个步奏。 ：可以把eslint的范围缩小到src,且只检查<em>.js 和 </em>.vue ：生产环境不开启lint，使用pre-commit或者husky在提交前校验。</li>
+<li>happypack多进程进行。</li>
+<li>动态链接库（DllPlugin），有点类似配置的externals。 补充一下： 缺点：将不能按需加载，会将配置的第三方库全部打包进去。 推荐：可以将使用率较高的包采用dll方案。（将一些不做修改的依赖文件，提前打包）。</li>
+<li>HardSourceWebpackPlugin会将模块编译后进行缓存，第一次之后速度会明显提升。</li>
+</ol>
+<p>参考：<a href="https://github.com/lihongxun945/diving-into-webpack/blob/master/1-introduction.md" target="_blank" rel="noopener">webpack 源码解析</a></p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+    <div>
+      
+        <div>
+    
+        <div style="text-align:center;color: #ccc;font-size:14px;">-------------本文结束<i class="fa fa-paw"></i>感谢您的阅读-------------</div>
+    
+</div>
+      
+    </div>
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/前端工程化/" rel="tag"># 前端工程化</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/post/843888ab.html" rel="next" title="前端安全">
+                <i class="fa fa-chevron-left"></i> 前端安全
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        
+  <div class="bdsharebuttonbox">
+    <a href="#" class="bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a>
+    <a href="#" class="bds_douban" data-cmd="douban" title="分享到豆瓣网"></a>
+    <a href="#" class="bds_sqq" data-cmd="sqq" title="分享到QQ好友"></a>
+    <a href="#" class="bds_qzone" data-cmd="qzone" title="分享到QQ空间"></a>
+    <a href="#" class="bds_weixin" data-cmd="weixin" title="分享到微信"></a>
+    <a href="#" class="bds_tieba" data-cmd="tieba" title="分享到百度贴吧"></a>
+    <a href="#" class="bds_twi" data-cmd="twi" title="分享到Twitter"></a>
+    <a href="#" class="bds_fbook" data-cmd="fbook" title="分享到Facebook"></a>
+    <a href="#" class="bds_more" data-cmd="more"></a>
+    <a class="bds_count" data-cmd="count"></a>
+  </div>
+  <script>
+    window._bd_share_config = {
+      "common": {
+        "bdText": "",
+        "bdMini": "2",
+        "bdMiniList": false,
+        "bdPic": ""
+      },
+      "share": {
+        "bdSize": "16",
+        "bdStyle": "0"
+      },
+      "image": {
+        "viewList": ["tsina", "douban", "sqq", "qzone", "weixin", "twi", "fbook"],
+        "viewText": "分享到：",
+        "viewSize": "16"
+      }
+    }
+  </script>
+
+<script>
+  with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='//bdimg.share.baidu.com/static/api/js/share.js?cdnversion='+~(-new Date()/36e5)];
+</script>
+
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="https://gss0.baidu.com/-4o3dSag_xI4khGko9WTAnF6hhy/zhidao/pic/item/aa18972bd40735fada8fd8ef9d510fb30f24086c.jpg" alt="Chen Kun">
+            
+              <p class="site-author-name" itemprop="name">Chen Kun</p>
+              <p class="site-description motion-element" itemprop="description">blog</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">19</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">6</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">6</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+            <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+              <div class="links-of-blogroll-title">
+                <i class="fa  fa-fw fa-link"></i>
+                推荐阅读
+              </div>
+              <ul class="links-of-blogroll-list">
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://www.uisdc.com/" title="优设" target="_blank">优设</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://www.zhangxinxu.com/" title="张鑫旭" target="_blank">张鑫旭</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://www.alloyteam.com/nav/" title="Web前端导航" target="_blank">Web前端导航</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://www.36zhen.com/t?id=3448" title="前端书籍资料" target="_blank">前端书籍资料</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://ife.baidu.com/" title="百度前端技术学院" target="_blank">百度前端技术学院</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://wf.uisdc.com/cn/" title="google前端开发基础" target="_blank">google前端开发基础</a>
+                  </li>
+                
+              </ul>
+            </div>
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#Webpack与Grunt，Gulp-的区别"><span class="nav-number">1.</span> <span class="nav-text">Webpack与Grunt，Gulp 的区别</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Webpack原理简述以及plugins和loaders的实现原理"><span class="nav-number">2.</span> <span class="nav-text">Webpack原理简述以及plugins和loaders的实现原理</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#2-Loader"><span class="nav-number">2.1.</span> <span class="nav-text">2. Loader</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Plugin"><span class="nav-number">2.2.</span> <span class="nav-text">Plugin</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-编译优化"><span class="nav-number">2.3.</span> <span class="nav-text">4. 编译优化</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#webpack-热更新原理"><span class="nav-number">3.</span> <span class="nav-text">webpack 热更新原理</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#webpack-生命周期"><span class="nav-number">3.1.</span> <span class="nav-text">webpack 生命周期</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#如何编写loaders和plugins"><span class="nav-number">3.2.</span> <span class="nav-text">如何编写loaders和plugins</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#介绍下-npm-模块安装机制，为什么输入-npm-install-就可以自动安装对应的模块？"><span class="nav-number">3.3.</span> <span class="nav-text">介绍下 npm 模块安装机制，为什么输入 npm install 就可以自动安装对应的模块？</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#webpack-打包-vue-速度太慢怎么办？"><span class="nav-number">3.4.</span> <span class="nav-text">webpack 打包 vue 速度太慢怎么办？</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+        <div class="back-to-top">
+          <i class="fa fa-arrow-up"></i>
+          
+            <span id="scrollpercent"><span>0</span>%</span>
+          
+        </div>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">chenkun</span>
+
+  
+</div>
+<div class="powered-by">
+  <i class="fa fa-user-md"></i><span id="busuanzi_container_site_uv">
+    <span id="busuanzi_value_site_uv"></span>
+  </span>
+</div>
+
+
+  
+
+
+
+  <span class="post-meta-divider"></span>
+
+
+
+  
+
+
+
+<div class="theme-info">
+  <div class="powered-by"></div>
+  <span class="post-count">博客全站共63.2k字</span>
+</div>
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
